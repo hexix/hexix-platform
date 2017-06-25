@@ -10,6 +10,7 @@
             "name": "hexix-platform versions",
             "program": "${workspaceRoot}/bin/hexix-platform",
             "args": [
+                  "-v",
                   "versions"
             ],
             "console": "internalConsole"

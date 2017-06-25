@@ -1,0 +1,3 @@
+#!/usr/bin/env node
+var platformAdmin = require("../");
+platformAdmin( process.argv );

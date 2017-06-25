@@ -16,11 +16,12 @@
             "subActions": [
                 "version-docker",
                 "version-docker-compose"
-            ]
+            ],
+            "title": "Docker Versions"
         },
         {
             "id": "version-docker",
-            "command": "pissdocker -v",
+            "command": "docker -v",
             "launchType": "fore"
         },
         {
