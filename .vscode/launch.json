@@ -1,0 +1,39 @@
+{
+    // Use IntelliSense to learn about possible Node.js debug attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "hexix-platform versions",
+            "program": "${workspaceRoot}/bin/hexix-platform",
+            "args": [
+                  "versions"
+            ],
+            "console": "internalConsole"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "hexix-platform build-dev",
+            "program": "${workspaceRoot}/bin/hexix-platform",
+            "args": [
+                  "build-dev"
+            ],
+            "console": "internalConsole"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "hexix-platform up",
+            "program": "${workspaceRoot}/bin/hexix-platform",
+            "args": [
+                  "up"
+            ],
+            "console": "internalConsole"
+        }
+
+    ]
+}

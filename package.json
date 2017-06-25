@@ -1,0 +1,25 @@
+{
+  "name": "hexix-platform",
+  "version": "0.1.0",
+  "description": "Hexix Platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hexix/hexix-platform.git"
+  },
+  "keywords": [
+    "development",
+    "environment",
+    "nodejs",
+    "docker"
+  ],
+  "author": "Greg Miller",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hexix/hexix-platform/issues"
+  },
+  "homepage": "https://github.com/hexix/hexix-platform#readme"
+}

@@ -1,0 +1,49 @@
+{
+    "actions": [
+        {
+            "id": "up",
+            "command": "docker-compose --verbose up",
+            "launchType": "back",
+            "title": "Services Up"
+        },
+        {
+            "id": "down",
+            "command": "docker-compose down",
+            "launchType": "fore"
+        },
+        {
+            "id": "versions",
+            "subActions": [
+                "version-docker",
+                "version-docker-compose"
+            ]
+        },
+        {
+            "id": "version-docker",
+            "command": "pissdocker -v",
+            "launchType": "fore"
+        },
+        {
+            "id": "version-docker-compose",
+            "command": "docker-compose version",
+            "launchType": "fore"
+        },
+        {
+            "id": "start-dev",
+            "command": ""
+        },
+        {
+            "id": "build-dev",
+            "command": "docker-compose --no-cache build",
+            "launchType":"fore"
+        },
+        {
+            "id": "restart",
+            "command": "docker-compose kill && docker-compose start",
+            "launchType":"fore"
+        }
+    ],
+    "subprojects":[
+        "src/app"
+    ]
+}

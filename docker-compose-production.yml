@@ -1,0 +1,8 @@
+version: "2"
+
+services:
+  app:
+    build: ./containers/app
+    ports:
+      - "127.0.0.1:3000:3000"
+
