@@ -97,8 +97,7 @@ const goodChild2ActionTitle = "testChild2Action";
         goodParentActionId
     ];
 
-
-// ShowUsage Tests
+describe("ShowUsage", () => {
     test.skip("ShowUsage does not throw without Services", () => {
         expect.assertions(1);
         return plat.ShowUsage()
@@ -114,11 +113,10 @@ const goodChild2ActionTitle = "testChild2Action";
                 expect(true).toEqual(true);
             });
     });
+});
 
-    
-
-// BuildOpts Tests
-    test("BuildOpts:: Rejects Bad", () => {
+describe("BuildOpts", () => {
+    test("Rejects Bad", () => {
         expect.assertions(2);
 
         var retCodes = platLib.RetCodes;
@@ -130,7 +128,7 @@ const goodChild2ActionTitle = "testChild2Action";
             });
     });
 
-    test("BuildOpts:: Accepts Good Default Service", () => {
+    test("Accepts Good Default Service", () => {
 
         expect.assertions(2);
         return platLib.BuildOpts(goodArgsNoService)
@@ -140,7 +138,7 @@ const goodChild2ActionTitle = "testChild2Action";
             });
     });
 
-    test("BuildOpts:: Accepts Good Specified Service", () => {
+    test("Accepts Good Specified Service", () => {
 
         expect.assertions(1);
         return platLib.BuildOpts(goodArgsSpecifiedService)
@@ -151,9 +149,10 @@ const goodChild2ActionTitle = "testChild2Action";
                     .toEqual([goodServiceActionId]);
             });
     });
+});
 
-// BuildConfig Tests
-    test("BuildConfig:: Specified Service", () => {
+describe("BuildConfig", () => {
+    test("Specified Service", () => {
         expect.assertions(1);
         return platLib.BuildConfig(goodOptsSpecifiedService)
             .then(config => {
@@ -165,7 +164,7 @@ const goodChild2ActionTitle = "testChild2Action";
             });
     });
 
-    test("BuildConfig:: Default Service, init action", () => {
+    test("Default Service, init action", () => {
         expect.assertions(1);
         return platLib.BuildConfig(goodOptsNoService)
             .then(config => {
@@ -178,9 +177,10 @@ const goodChild2ActionTitle = "testChild2Action";
                     .toEqual(platLib.BuiltIn.actions.init.title);
             });
     });
+});
 
-// LoadConfig
-    test("LoadConfig:: Check ServiceId", () => {
+describe("LoadConfig", () => {
+    test("Check ServiceId", () => {
         expect.assertions(1);
         return platLib.LoadConfig(testConfigWithOptsAndService)
             .then(config => {
@@ -194,7 +194,7 @@ const goodChild2ActionTitle = "testChild2Action";
             });
     });
 
-    test("LoadConfig:: Check ActionId", () => {
+    test("Check ActionId", () => {
         expect.assertions(1);
         return platLib.LoadConfig(testConfigWithOptsAndService)
             .then(config => {
@@ -209,7 +209,7 @@ const goodChild2ActionTitle = "testChild2Action";
             });
     });
 
-    test("LoadConfig:: Load from file", () => {
+    test("Load from file", () => {
         expect.assertions(1);
         return platLib.BuildOpts(goodArgsSpecifiedService)
             .then( opts => { return platLib.BuildConfig(opts) })
@@ -226,9 +226,10 @@ const goodChild2ActionTitle = "testChild2Action";
                     .toEqual(goodServiceActionCommand);
             });
     });
+});
 
-// Tests for LookupAction
-    test("LookupAction:: Good ActionId, Good ServiceId", () => {
+describe("LookupAction", () => {
+    test("Good ActionId, Good ServiceId", () => {
         expect.assertions(1);
         debugger;
         return platLib.LookupAction(testConfigWithOptsAndService)
@@ -237,13 +238,15 @@ const goodChild2ActionTitle = "testChild2Action";
                 expect(
                     config
                     .options
-                    .actions[goodServiceActionId]
+                    .actions.find(action => {
+                        return action.id == goodServiceActionId;
+                    }) //[goodServiceActionId]
                     .command)
                     .toEqual(goodServiceActionCommand);
             });
     });
 
-    test("LookupAction:: Bad Service Id", () => {
+    test("Bad Service Id", () => {
         expect.assertions(1);
         return platLib.LookupAction(testConfigWithOptsAndService)
             .then(config => {
@@ -257,7 +260,7 @@ const goodChild2ActionTitle = "testChild2Action";
             });
     });
 
-    test("LookupAction:: Subactions", () => {
+    test("Subactions", () => {
         expect.assertions(1);
         debugger;
         return platLib.LookupAction(testConfigWithSubactions)
@@ -272,25 +275,25 @@ const goodChild2ActionTitle = "testChild2Action";
             });
     });
 
-// PerformActions Tests
+});
 
-    test.only("PerformActions:: full stack", () => {
+describe("PerformActions", () => {
+    test("full stack", () => {
         expect.assertions(1);
         var config = JSON.parse(JSON.stringify(testConfigGoodOptsNoService));
-        debugger;
         // opts.services.push(platLib.BuiltIn);
 
-        Promise.resolve(config)
+        return Promise.resolve(config)
         .then( platLib.LoadConfig )
         .then( platLib.LookupAction )
         .then( platLib.PerformActions )
-        .then(() => {
-            // expect goodServiceActionId directory to be created
-        });
-
+        .catch( err => {
+            expect(err).not.toBeNull();
+        })
     });
+});
 
-// Promise playground
+describe.skip("Promises Playground", () => {
     test("Promises:: Nested", () => {
         expect.assertions(1);
         return Promise.resolve()
@@ -391,3 +394,4 @@ const goodChild2ActionTitle = "testChild2Action";
             expect(output).toHaveLength(7);
         });
     });
+});
