@@ -1,0 +1,30 @@
+    {
+        "id": "testService",
+        "title": "Test Service Name:",
+        "actions": {
+            "testServiceAction": {
+                "command": "testServiceActionCommand",
+                "launchType": "fore",
+                "title": "testServiceActionTitle"
+            },
+            "testParentAction": {
+                "subActions": [
+                    "testChild1Action",
+                    "testChild2Action"
+                ],
+                "title": "testParentActionTitle"
+            },
+            "testChild1Action": {
+                "command": "testChild1Command",
+                "launchType": "fore",
+                "title": "testChild1Title"
+            },
+            "testChild2Action": {
+                "command": "testChild2Command",
+                "launchType": "fore",
+                "title": "testChilds2Title"
+            }
+        }
+    }
+
+

@@ -5,6 +5,55 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Debug Tests",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "runtimeExecutable": "npm",
+            "windows": {
+                "runtimeExecutable": "npm.cmd"
+            },
+            "runtimeArgs": [
+                "run-script", "test-debug"
+            ],
+            "port": 5858
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "hexix-platform env",
+            "program": "${workspaceRoot}/bin/hexix-platform",
+            "args": [
+                "env"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "hexix-platform init (no args)",
+            "program": "${workspaceRoot}/bin/hexix-platform",
+            "args": [
+                "init"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "hexix-platform init testDir",
+            "program": "${workspaceRoot}/bin/hexix-platform",
+            "args": [
+                "-v",
+                "init",
+                "testDir"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "hexix-platform (no args)",
+            "program": "${workspaceRoot}/bin/hexix-platform"
+        },
+        {
             "type": "node",
             "request": "launch",
             "name": "hexix-platform versions",
@@ -12,8 +61,7 @@
             "args": [
                   "-v",
                   "versions"
-            ],
-            "console": "internalConsole"
+            ]
         },
         {
             "type": "node",
@@ -22,8 +70,7 @@
             "program": "${workspaceRoot}/bin/hexix-platform",
             "args": [
                   "build-dev"
-            ],
-            "console": "internalConsole"
+            ]
         },
         {
             "type": "node",
@@ -32,8 +79,7 @@
             "program": "${workspaceRoot}/bin/hexix-platform",
             "args": [
                   "up"
-            ],
-            "console": "internalConsole"
+            ]
         }
 
     ]

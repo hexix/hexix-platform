@@ -2,6 +2,11 @@
     "id": "docker",
     "title": "Docker Actions:",
     "actions": {
+        "env": {
+            "command": "env",
+            "launchType": "fore",
+            "title": "Show the environment vars"
+        },
         "up": {
             "command": "docker-compose --verbose up",
             "launchType": "back",
@@ -14,8 +19,12 @@
         },
         "versions": {
             "subActions": [
-                "version-docker",
-                "version-docker-compose"
+                [
+                    "version-docker"
+                ],
+                [
+                    "version-docker-compose"
+                ]
             ],
             "title": "Docker Versions"
         },
@@ -23,13 +32,13 @@
             "command": "docker -v",
             "launchType": "fore",
             "title": "Show docker version",
-            "showInUsage": false
+            "showUsage": false
         },
         "version-docker-compose": {
             "command": "docker-compose version",
             "launchType": "fore",
             "title": "Show docker-compose version",
-            "showInUsage": false
+            "showUsage": false
         },
         "restart": {
             "command": "docker-compose kill && docker-compose start",
