@@ -10,7 +10,7 @@
   },
   "scripts": {
     "test": "jest --no-cache",
-    "test-debug": "node --nolazy --debug-brk node_modules/jest/bin/jest -i --watch"
+    "test-debug": "node --nolazy --debug-brk node_modules/jest/bin/jest --no-cache -i --watch"
   },
   "repository": {
     "type": "git",
@@ -52,6 +52,9 @@
     ],
     "roots": [
       "<rootDir>/__tests__"
+    ],
+    "setupFiles": [
+      "./jest-setup.js"
     ]
   }
 }

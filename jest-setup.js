@@ -1,3 +1,2 @@
-const jest = require("jest");
+//console.log = function() { }
 
-console.log = function() { }

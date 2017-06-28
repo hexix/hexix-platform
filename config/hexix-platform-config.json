@@ -14,12 +14,8 @@
         },
         "versions": {
             "subActions": [
-                [
-                    "version-docker"
-                ],
-                [
-                    "version-docker-compose"
-                ]
+                "version-docker",
+                "version-docker-compose"
             ],
             "title": "Docker Versions"
         },
@@ -27,13 +23,13 @@
             "command": "docker -v",
             "launchType": "fore",
             "title": "Show docker version",
-            "showUsage": false
+            "showInUsage": false
         },
         "version-docker-compose": {
             "command": "docker-compose version",
             "launchType": "fore",
             "title": "Show docker-compose version",
-            "showUsage": false
+            "showInUsage": false
         },
         "restart": {
             "command": "docker-compose kill && docker-compose start",

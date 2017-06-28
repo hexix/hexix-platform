@@ -5,11 +5,23 @@ const PlatformLib = require("../lib/platform.js").PlatformLib;
 var platLib = new PlatformLib();
 const goodServiceId = "testService";
 const badServiceId = "worldDomination";
+
 const goodServiceTitle = "testServiceTitle";
+
 const goodServiceActionId = "testServiceAction";
 const goodServiceActionCommand = "testServiceActionCommand";
+
 const goodCommandArgs = ["arg1", "arg2"];
 const goodServiceActionTitle = "testServiceActionTitle";
+
+const goodParentActionId = "testParentAction";
+const goodParentActionTitle = "testParentAction";
+
+const goodChild1ActionId = "testChild1Action";
+const goodChild1ActionTitle = "testChild1Action";
+
+const goodChild2ActionId = "testChild2Action";
+const goodChild2ActionTitle = "testChild2Action";
 
 // Test Data For BuildOpts tests
     const badArgs = ["-p", "junk", "and", "stuff", "and", "things"];
@@ -46,6 +58,22 @@ const goodServiceActionTitle = "testServiceActionTitle";
         "launchType": "fore",
         "title": goodServiceActionTitle
     };
+    testService.actions[goodParentActionId] = {
+        "subActions": [
+            goodChild1ActionId,
+            goodChild2ActionId
+        ]
+    }
+    testService.actions[goodChild1ActionId] = {
+        "command": goodServiceActionCommand,
+        "launchType": "fore",
+        "title": goodChild1ActionTitle
+    }
+    testService.actions[goodChild2ActionId] = {
+        "command": goodServiceActionCommand,
+        "launchType": "fore",
+        "title": goodChild2ActionTitle
+    }
 
     var testConfigGoodOptsNoService = {
         "options": goodOptsNoService,
@@ -59,6 +87,13 @@ const goodServiceActionTitle = "testServiceActionTitle";
         ],
         "options": goodOptsSpecifiedService
     };
+
+    var testConfigWithSubactions = testConfigWithOptsAndService;
+    testConfigWithSubactions.options.service = goodServiceId;
+    testConfigWithSubactions.options.commandLineArr = [
+        goodParentActionId
+    ];
+
 
 // ShowUsage Tests
     test.skip("ShowUsage does not throw without Services", () => {
@@ -140,7 +175,7 @@ const goodServiceActionTitle = "testServiceActionTitle";
     });
 
 // LoadConfig
-    test("LoadConfig:: Opts and Service - check ServiceId", () => {
+    test("LoadConfig:: Check ServiceId", () => {
         expect.assertions(1);
         return platLib.LoadConfig(testConfigWithOptsAndService)
             .then(config => {
@@ -154,9 +189,8 @@ const goodServiceActionTitle = "testServiceActionTitle";
             });
     });
 
-    test("LoadConfig:: Opts and Service - check ActionId", () => {
+    test("LoadConfig:: Check ActionId", () => {
         expect.assertions(1);
-        debugger;
         return platLib.LoadConfig(testConfigWithOptsAndService)
             .then(config => {
                 expect(
@@ -189,32 +223,26 @@ const goodServiceActionTitle = "testServiceActionTitle";
     });
 
 // Tests for LookupAction
-    test("LookupAction:: Opts and Service - Good ActionId, Good ServiceId", () => {
+    test("LookupAction:: Good ActionId, Good ServiceId", () => {
         expect.assertions(1);
-        debugger;
         return platLib.LookupAction(testConfigWithOptsAndService)
             .then(config => {
                 expect(
                     config
-                    .services.find(service => {
-                        return service.id == goodServiceId;
-                    })
+                    .options
                     .actions[goodServiceActionId]
                     .command)
                     .toEqual(goodServiceActionCommand);
             });
     });
 
-    test("LookupAction:: Opts and Service - Bad Service Id", () => {
+    test("LookupAction:: Bad Service Id", () => {
         expect.assertions(1);
-        debugger;
         return platLib.LookupAction(testConfigWithOptsAndService)
             .then(config => {
                     var nonExistant = config
-                    .services.find(service => {
-                        return service.id == badServiceId;
-                    })
-                    .actions[goodServiceActionId]
+                    .options
+                    .actions[badServiceId]
                     .command;
             })
             .catch(err => {
@@ -222,4 +250,18 @@ const goodServiceActionTitle = "testServiceActionTitle";
             });
     });
 
-    
+    test("LookupAction:: Subactions", () => {
+        expect.assertions(1);
+        debugger;
+        return platLib.LookupAction(testConfigWithSubactions)
+            .then(config => {
+                debugger;
+                expect(
+                    config
+                    .options
+                    .actions[goodChild1ActionId]
+                    .title)
+                    .toEqual(goodChild1ActionTitle);
+            });
+    });
+
