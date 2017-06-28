@@ -8,8 +8,6 @@ const copyTemplates = require("copy-template-dir");
 const Promise = require("bluebird");
 const chalk = require("chalk");
 const childProcess = require("child_process");
-const exec = childProcess.exec;
-const spawnSync = childProcess.spawnSync;
 const spawn = require("cross-spawn");
 //const spawn = childProcess.spawn;
 
@@ -70,56 +68,6 @@ function copyPlatformFiles(dirName) {
         // platformTemplate.files.forEach((fileName) => {
 
         // });
-    });
-}
-
-function performAction(action) {
-    return new Promise((resolve, reject) => {
-        var commandString = action.command;
-        var spawnOpts;
-        if (action.launchType == "back") {
-            commandString = "start \"Hexix\" " + action.command;
-            spawnOpts = {
-                detached: true,
-                stdio: "ignore",
-                shell: true
-            }
-            var child = spawn(commandString, [], spawnOpts)
-                .on("error", (err) => {
-                    reject(err);
-                })
-                .on("exit", (ret) => {
-                    if (ret != 0) {
-                        reject("Exit code: " + ret);
-                    } else {
-                        resolve();
-                    }
-                });
-        } else {
-            spawnOpts = {
-                detached: false,
-                stdio: [
-                    "ignore",
-                    "inherit",
-                    "pipe"
-                ],
-                shell: true
-            }
-            var child = spawn(commandString, [], spawnOpts)
-                .on("error", (err) => {
-                    reject(err);
-                })
-                .on("exit", (ret) => {
-                    if (ret != 0) {
-                        reject("Exit code: " + ret);
-                    } else {
-                        resolve();
-                    }
-                })
-                .stderr.on("data", (err) => {
-                    reject(err);
-                });
-        }
     });
 }
 

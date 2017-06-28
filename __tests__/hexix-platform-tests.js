@@ -88,7 +88,7 @@ const goodChild2ActionTitle = "testChild2Action";
         "options": goodOptsSpecifiedService
     };
 
-    var testConfigWithSubactions = testConfigWithOptsAndService;
+    var testConfigWithSubactions = JSON.parse(JSON.stringify(testConfigWithOptsAndService)); // you'll go blind
     testConfigWithSubactions.options.service = goodServiceId;
     testConfigWithSubactions.options.commandLineArr = [
         goodParentActionId
@@ -225,8 +225,10 @@ const goodChild2ActionTitle = "testChild2Action";
 // Tests for LookupAction
     test("LookupAction:: Good ActionId, Good ServiceId", () => {
         expect.assertions(1);
+        debugger;
         return platLib.LookupAction(testConfigWithOptsAndService)
             .then(config => {
+                debugger;
                 expect(
                     config
                     .options
