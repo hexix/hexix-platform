@@ -2,6 +2,11 @@
     "id": "docker",
     "title": "Docker Actions:",
     "actions": {
+        "env": {
+            "command": "env",
+            "launchType": "fore",
+            "title": "Show the environment vars"
+        },
         "up": {
             "command": "docker-compose --verbose up",
             "launchType": "back",

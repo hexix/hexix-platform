@@ -1,0 +1,13 @@
+    {
+        "id": "testService",
+        "title": "Test Service Name:",
+        "actions": {
+            "testServiceAction": {
+                "command": "testServiceActionCommand",
+                "launchType": "fore",
+                "usage": "testServiceActionUsage"
+            }
+        }
+    }
+
+
