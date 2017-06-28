@@ -22,29 +22,7 @@ function PlatformAdmin() {
         .then( (config) => { return platLib.LoadConfig(config); })
         .then( (config) => { return platLib.LookupAction(config); })
         .then( (config) => { return platLib.PerformActions(config); })
-        .catch( displayError );
-}
-
-
-
-function performBuiltIn() {
-    return new Promise((resolve, reject) => {
-        var actionKey = options[0];
-        switch (actionKey) {
-            case "init":
-                if (options.commandLineArr.length != 2) reject(retCodes.ERRARGS);
-                createDir(options.commandLineArr[1])
-                    .then(copyPlatformFiles)
-                    .then(resolve(actionKey))
-                    .catch((err) => { reject(err); });
-                break;
-            case "env":
-                performAction(builtInActions.env)
-                    .then(resolve(actionKey))
-                    .catch((err) => { reject(err); });
-                break;
-        }
-    });
+        .catch( (err) => { displayError(err); });
 }
 
 function copyPlatformFiles(dirName) {

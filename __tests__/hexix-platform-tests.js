@@ -3,6 +3,7 @@ const plat = require("../hexix-platform");
 const PlatformLib = require("../lib/platform.js").PlatformLib;
 
 var platLib = new PlatformLib();
+
 const goodServiceId = "testService";
 const badServiceId = "worldDomination";
 
@@ -39,8 +40,10 @@ const goodChild2ActionTitle = "testChild2Action";
         ]
     }
 
+
     var goodOptsNoService = {
         "verbose": true,
+        "service": "builtIn",
         "commandLineArr": [
             "init",
             goodServiceId
@@ -129,9 +132,10 @@ const goodChild2ActionTitle = "testChild2Action";
 
     test("BuildOpts:: Accepts Good Default Service", () => {
 
-        expect.assertions(1);
+        expect.assertions(2);
         return platLib.BuildOpts(goodArgsNoService)
             .then((opts) => {
+                expect(opts.service).toEqual("builtIn");
                 expect(opts.commandLineArr).toEqual(["init", "devApp"]);
             });
     });
@@ -153,6 +157,7 @@ const goodChild2ActionTitle = "testChild2Action";
         expect.assertions(1);
         return platLib.BuildConfig(goodOptsSpecifiedService)
             .then(config => {
+                debugger;
                 expect(
                     config
                     .options
@@ -267,3 +272,122 @@ const goodChild2ActionTitle = "testChild2Action";
             });
     });
 
+// PerformActions Tests
+
+    test.only("PerformActions:: full stack", () => {
+        expect.assertions(1);
+        var config = JSON.parse(JSON.stringify(testConfigGoodOptsNoService));
+        debugger;
+        // opts.services.push(platLib.BuiltIn);
+
+        Promise.resolve(config)
+        .then( platLib.LoadConfig )
+        .then( platLib.LookupAction )
+        .then( platLib.PerformActions )
+        .then(() => {
+            // expect goodServiceActionId directory to be created
+        });
+
+    });
+
+// Promise playground
+    test("Promises:: Nested", () => {
+        expect.assertions(1);
+        return Promise.resolve()
+        .then((s) => {
+            return Promise.delay(1000, 
+                Promise.resolve()
+                .then(s => {
+                    return Promise.resolve(32);
+                })
+            );
+        })
+        .then((s) => {
+            expect(s).toEqual(32)
+        });
+    });
+
+    test("Promises:: Nested in function", () => {
+        expect.assertions(1);
+        return Promise.resolve()
+        .then((s) => {
+            return nestProms(32);
+        })
+        .then((s) => {
+            expect(s).toEqual(64)
+        });
+    })
+
+    function nestProms(input) {
+        return Promise.resolve(input)
+        .then((input1) => {
+            // console.warn(input1);
+            return Promise.delay(250, 
+                Promise.resolve(input1)
+                .then(input2 => {
+                    // console.warn(input2);
+                    var output = input2 * 2;
+                    throw "poop";
+                    // return Promise.reject("poop");
+                    // return output;
+                })
+            );
+        });
+    }
+
+    test.skip("Promises:: ForEach", () => {
+        // BAD!
+        expect.assertions(1);
+        var arrNums = [1, 2, 3, 4, 3, 2, 1];
+        
+        return Promise.resolve(arrNums)
+        .then(numArr => {
+            numArr.forEach(num => {
+                return nestProms(num);
+            });
+        })
+        .then(output => {
+            expect(output).toHaveLength(7);
+        });
+    });
+
+    test.skip("Promises:: forEachPromise", () => {
+        // don't understand
+        expect.assertions(1);
+        var arrNums = [1, 2, 3, 4, 3, 2, 1];
+        
+        return Promise.resolve(arrNums)
+        .then(numArr => {
+            return forEachPromise(numArr, num => {
+                return nestProms(num);
+            });
+        })
+        .then(output => {
+            expect(output).toHaveLength(7);
+        });
+    });
+
+    // https://stackoverflow.com/a/41791149/654507
+    function forEachPromise(items, fn) {
+        return items.reduce(function (promise, item) {
+            return promise.then(function () {
+                return fn(item);
+            });
+        }, Promise.resolve());
+    }
+
+    // https://stackoverflow.com/questions/41022341/wait-callback-with-promise-mapseries
+    test("Promises:: mapSeries", () => {
+        expect.assertions(1);
+        var arrNums = [1, 2, 3, 4, 3, 2, 1];
+        
+        return Promise.resolve(arrNums)
+        .mapSeries(num => {
+            console.warn(num);
+            return nestProms(num);
+        })
+        .then(output => {
+            debugger;
+            expect(output).toHaveLength(7);
+        });
+    });
