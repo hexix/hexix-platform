@@ -25,30 +25,6 @@ function PlatformAdmin() {
         .catch( (err) => { displayError(err); });
 }
 
-function copyPlatformFiles(dirName) {
-    return new Promise((resolve, reject) => {
-        copyTemplates("templates/platform-template",
-            dirName,
-            null,
-            (err, files) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    if (verbose) {
-                        files.forEach(file => console.log("Copied file: " + file));
-                    }
-                    resolve(retCodes.DONE);
-                }
-            });
-        // platformTemplate.dirs.forEach((dirName => {
-        //     createDir(dirName);
-        // }));
-        // platformTemplate.files.forEach((fileName) => {
-
-        // });
-    });
-}
-
 function displayError(err) {
     if (err != retCodes.DONE) {
         console.log(chalk.red("Hexix Platform Error: %s"), err);
@@ -60,50 +36,56 @@ function displayError(err) {
     }
 }
 
-function showUsage(config = null) {
+function showUsage(config) {
     return Promise.resolve(config)
-    .then( () => {
+    .then(config => {
+        debugger;
         var opts = { verbose: false, service: "builtIn", commandLineArr: [] };
-        return platLib.BuildConfig(opts); 
+        return platLib.BuildConfig(opts);
         })
-    .then( config => { return platLib.LoadConfig(config); })
-    .catch( err => {
+    .then(config => { return platLib.LoadConfig(config); })
+    .catch(err => {
             if (err) {
                 var skelConfig = {};
-                skelConfig.options = opts;
+                skelConfig.options = JSON.parse(JSON.stringify(opts));
                 skelConfig.services = [];
                 skelConfig.services.push(platLib.BuiltIn);
             }
             return skelConfig;
     })
-    .then( config => {
-        console.log(chalk.bold("Usage: "));
-        console.log("  platform-admin [OPTIONS] _action_");
-        console.log("\nOptions:");
-        console.log("  -v, -verbose\n");
-        console.log("  -s, -service _service_\n");
+    .then(config => {
+        try {
+            console.log(chalk.bold("Usage: "));
+            console.log("  platform-admin [OPTIONS] _action_");
+            console.log("\nOptions:");
+            console.log("  -v, -verbose");
+            console.log("  -s, -service _service_\n");
 
-        if (config) {
-            if (config.services) {
-                if (config.services.length > 1) {
-                    config.services.forEach(service => {
-                        console.log("\n");
-                        showDetail(service.title, "Usage:  -s " + service.id, 30, 0);
-                        Object.keys(service.actions).forEach(actionKey => {
-                            var action = service.actions[actionKey];
-                            showDetail(actionKey, action.usage);
+            if (config) {
+                if (config.services) {
+                    if (config.services.length > 1) {
+                        config.services.forEach(service => {
+                            console.log("\n");
+                            showDetail(service.title, "Usage:  -s " + service.id, 30, 0);
+                            Object.keys(service.actions).forEach(actionKey => {
+                                var action = service.actions[actionKey];
+                                showDetail(actionKey, action.usage);
+                            });
                         });
-                    });
+                    }
                 }
             }
         }
+        catch (err) {
+            console.error(chalk.red("Error: can't display usage information from config files"));
+        }
         return;
     })
-    .catch(err => { 
+    .catch(err => {
         console.error(chalk.red("Error: can't display usage information"));
         return;
     });
-    
+
 }
 
 function showDetail(id, usage, minSpacing = 25, indentSpacing = 2) {
