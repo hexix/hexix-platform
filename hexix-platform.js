@@ -45,12 +45,11 @@ function showUsage(config) {
         })
     .then(config => { return platLib.LoadConfig(config); })
     .catch(err => {
-            if (err) {
-                var skelConfig = {};
-                skelConfig.options = JSON.parse(JSON.stringify(opts));
-                skelConfig.services = [];
-                skelConfig.services.push(platLib.BuiltIn);
-            }
+            var skelConfig = {};
+            var opts = { verbose: false, service: "builtIn", commandLineArr: [] };
+            skelConfig.options = JSON.parse(JSON.stringify(opts));
+            skelConfig.services = [];
+            skelConfig.services.push(platLib.BuiltIn);
             return skelConfig;
     })
     .then(config => {
@@ -61,9 +60,10 @@ function showUsage(config) {
             console.log("  -v, -verbose");
             console.log("  -s, -service _service_\n");
 
+            debugger;
             if (config) {
                 if (config.services) {
-                    if (config.services.length > 1) {
+                    if (config.services.length > 0) {
                         config.services.forEach(service => {
                             console.log("\n");
                             showDetail(service.title, "Usage:  -s " + service.id, 30, 0);
