@@ -1,6 +1,6 @@
 {
   "name": "hexix-platform",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "Hexix Platform",
   "main": "hexix-platform.js",
   "directories": {
