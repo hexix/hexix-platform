@@ -97,7 +97,12 @@ const goodChild2ActionTitle = "testChild2Action";
         goodParentActionId
     ];
 
+<<<<<<< HEAD
 describe("ShowUsage", () => {
+=======
+
+// ShowUsage Tests
+>>>>>>> develop
     test.skip("ShowUsage does not throw without Services", () => {
         expect.assertions(1);
         return plat.ShowUsage()
@@ -113,10 +118,18 @@ describe("ShowUsage", () => {
                 expect(true).toEqual(true);
             });
     });
+<<<<<<< HEAD
 });
 
 describe("BuildOpts", () => {
     test("Rejects Bad", () => {
+=======
+
+    
+
+// BuildOpts Tests
+    test("BuildOpts:: Rejects Bad", () => {
+>>>>>>> develop
         expect.assertions(2);
 
         var retCodes = platLib.RetCodes;
@@ -128,7 +141,11 @@ describe("BuildOpts", () => {
             });
     });
 
+<<<<<<< HEAD
     test("Accepts Good Default Service", () => {
+=======
+    test("BuildOpts:: Accepts Good Default Service", () => {
+>>>>>>> develop
 
         expect.assertions(2);
         return platLib.BuildOpts(goodArgsNoService)
@@ -138,7 +155,11 @@ describe("BuildOpts", () => {
             });
     });
 
+<<<<<<< HEAD
     test("Accepts Good Specified Service", () => {
+=======
+    test("BuildOpts:: Accepts Good Specified Service", () => {
+>>>>>>> develop
 
         expect.assertions(1);
         return platLib.BuildOpts(goodArgsSpecifiedService)
@@ -149,10 +170,16 @@ describe("BuildOpts", () => {
                     .toEqual([goodServiceActionId]);
             });
     });
+<<<<<<< HEAD
 });
 
 describe("BuildConfig", () => {
     test("Specified Service", () => {
+=======
+
+// BuildConfig Tests
+    test("BuildConfig:: Specified Service", () => {
+>>>>>>> develop
         expect.assertions(1);
         return platLib.BuildConfig(goodOptsSpecifiedService)
             .then(config => {
@@ -164,7 +191,11 @@ describe("BuildConfig", () => {
             });
     });
 
+<<<<<<< HEAD
     test("Default Service, init action", () => {
+=======
+    test("BuildConfig:: Default Service, init action", () => {
+>>>>>>> develop
         expect.assertions(1);
         return platLib.BuildConfig(goodOptsNoService)
             .then(config => {
@@ -177,10 +208,16 @@ describe("BuildConfig", () => {
                     .toEqual(platLib.BuiltIn.actions.init.title);
             });
     });
+<<<<<<< HEAD
 });
 
 describe("LoadConfig", () => {
     test("Check ServiceId", () => {
+=======
+
+// LoadConfig
+    test("LoadConfig:: Check ServiceId", () => {
+>>>>>>> develop
         expect.assertions(1);
         return platLib.LoadConfig(testConfigWithOptsAndService)
             .then(config => {
@@ -194,7 +231,11 @@ describe("LoadConfig", () => {
             });
     });
 
+<<<<<<< HEAD
     test("Check ActionId", () => {
+=======
+    test("LoadConfig:: Check ActionId", () => {
+>>>>>>> develop
         expect.assertions(1);
         return platLib.LoadConfig(testConfigWithOptsAndService)
             .then(config => {
@@ -209,7 +250,11 @@ describe("LoadConfig", () => {
             });
     });
 
+<<<<<<< HEAD
     test("Load from file", () => {
+=======
+    test("LoadConfig:: Load from file", () => {
+>>>>>>> develop
         expect.assertions(1);
         return platLib.BuildOpts(goodArgsSpecifiedService)
             .then( opts => { return platLib.BuildConfig(opts) })
@@ -226,10 +271,16 @@ describe("LoadConfig", () => {
                     .toEqual(goodServiceActionCommand);
             });
     });
+<<<<<<< HEAD
 });
 
 describe("LookupAction", () => {
     test("Good ActionId, Good ServiceId", () => {
+=======
+
+// Tests for LookupAction
+    test("LookupAction:: Good ActionId, Good ServiceId", () => {
+>>>>>>> develop
         expect.assertions(1);
         debugger;
         return platLib.LookupAction(testConfigWithOptsAndService)
@@ -238,15 +289,23 @@ describe("LookupAction", () => {
                 expect(
                     config
                     .options
+<<<<<<< HEAD
                     .actions.find(action => {
                         return action.id == goodServiceActionId;
                     }) //[goodServiceActionId]
+=======
+                    .actions[goodServiceActionId]
+>>>>>>> develop
                     .command)
                     .toEqual(goodServiceActionCommand);
             });
     });
 
+<<<<<<< HEAD
     test("Bad Service Id", () => {
+=======
+    test("LookupAction:: Bad Service Id", () => {
+>>>>>>> develop
         expect.assertions(1);
         return platLib.LookupAction(testConfigWithOptsAndService)
             .then(config => {
@@ -260,7 +319,11 @@ describe("LookupAction", () => {
             });
     });
 
+<<<<<<< HEAD
     test("Subactions", () => {
+=======
+    test("LookupAction:: Subactions", () => {
+>>>>>>> develop
         expect.assertions(1);
         debugger;
         return platLib.LookupAction(testConfigWithSubactions)
@@ -275,6 +338,7 @@ describe("LookupAction", () => {
             });
     });
 
+<<<<<<< HEAD
 });
 
 describe("PerformActions", () => {
@@ -294,6 +358,27 @@ describe("PerformActions", () => {
 });
 
 describe.skip("Promises Playground", () => {
+=======
+// PerformActions Tests
+
+    test.only("PerformActions:: full stack", () => {
+        expect.assertions(1);
+        var config = JSON.parse(JSON.stringify(testConfigGoodOptsNoService));
+        debugger;
+        // opts.services.push(platLib.BuiltIn);
+
+        Promise.resolve(config)
+        .then( platLib.LoadConfig )
+        .then( platLib.LookupAction )
+        .then( platLib.PerformActions )
+        .then(() => {
+            // expect goodServiceActionId directory to be created
+        });
+
+    });
+
+// Promise playground
+>>>>>>> develop
     test("Promises:: Nested", () => {
         expect.assertions(1);
         return Promise.resolve()
@@ -393,5 +478,9 @@ describe.skip("Promises Playground", () => {
             debugger;
             expect(output).toHaveLength(7);
         });
+<<<<<<< HEAD
     });
 });
+=======
+    });
+>>>>>>> develop
