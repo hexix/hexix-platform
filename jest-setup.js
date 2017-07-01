@@ -1,10 +1,12 @@
 const fs=require("fs");
 
-fs.rmdirSync("testService");
+if (fs.existsSync("testService")) {
+    fs.rmdirSync("testService");
+};
 
 //console.log = function() { }
 
 process.on("unhandledRejection", (reason) => {
-  console.log("Unhandled Rejection\n" + reason)
+  console.error("Unhandled Rejection\n" + reason)
 })
 
