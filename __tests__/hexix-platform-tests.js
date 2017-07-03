@@ -94,7 +94,7 @@ const goodChild2ActionTitle = "testChild2Action";
         "options": goodOptsSpecifiedService
     };
 
-    var testConfigWithSubactions = JSON.parse(JSON.stringify(testConfigWithOptsAndService)); // you'll go blind
+    var testConfigWithSubactions = JSON.parse(JSON.stringify(testConfigWithOptsAndService));
     testConfigWithSubactions.options.service = goodServiceId;
     testConfigWithSubactions.options.commandLineArr = [
         goodParentActionId
@@ -281,7 +281,7 @@ describe("LookupAction", () => {
 });
 
 describe("PerformActions", () => {
-    test.only("full stack", () => {
+    test("full stack", () => {
         expect.assertions(1);
         var config = JSON.parse(JSON.stringify(testConfigGoodOptsNoService));
         // opts.services.push(platLib.BuiltIn);
