@@ -1,11 +1,11 @@
 {
   "name": "hexix-platform",
-  "version": "0.1.14",
+  "version": "0.1.17",
   "description": "Hexix Platform",
   "main": "hexix-platform.js",
   "directories": {
     "bin": "bin",
-    "config": "config",
+    "./.config": "./.config",
     "src": "src"
   },
   "scripts": {

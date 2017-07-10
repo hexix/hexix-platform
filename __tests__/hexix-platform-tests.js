@@ -264,15 +264,18 @@ describe("LookupAction", () => {
     });
 
     test("Subactions", () => {
-        expect.assertions(1);
-        debugger;
+        expect.assertions(2);
+        // debugger;
         return platLib.LookupAction(testConfigWithSubactions)
             .then(config => {
                 debugger;
+                var subAction = config.options.actions.find(action => {
+                    debugger;
+                    return action.id == goodChild1ActionId;
+                });
+                expect(subAction).toBeTruthy();
                 expect(
-                    config
-                    .options
-                    .actions[goodChild1ActionId]
+                    subAction
                     .title)
                     .toEqual(goodChild1ActionTitle);
             });
@@ -281,7 +284,7 @@ describe("LookupAction", () => {
 });
 
 describe("PerformActions", () => {
-    test("full stack", () => {
+    test.skip("full stack", () => {
         expect.assertions(1);
         var config = JSON.parse(JSON.stringify(testConfigGoodOptsNoService));
         // opts.services.push(platLib.BuiltIn);
@@ -293,6 +296,7 @@ describe("PerformActions", () => {
         .then( platLib.PerformActions )
         .then( () => {
             debugger;
+            // TODO: NOT ready for prod... use a dirname from the service config
             var serviceDir = path.join(__dirname, "../", goodServiceId);
             var files = fs.readdirSync(serviceDir);
             expect(files).toHaveLength();
